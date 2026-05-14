@@ -17,7 +17,11 @@ type KanjiPartsRecord = {
   kanjiParts: KanjiParts;
 };
 
-const inputPath = "vendor/chise-ids/IDS-UCS-Basic.txt";
+const inputPaths = [
+  "vendor/chise-ids/IDS-UCS-Basic.txt",
+  "vendor/chise-ids/IDS-UCS-Ext-A.txt",
+  "vendor/chise-ids/IDS-UCS-Compat.txt",
+];
 const outputPath = "public/data/kanji-parts-map.json";
 
 function parseLine(line: string): IdsRecord | null {
@@ -71,9 +75,12 @@ function parseIds(idsRecord: IdsRecord): KanjiPartsRecord | null {
   };
 }
 
-const text = await readFile(inputPath, "utf-8");
+const texts = await Promise.all(
+  inputPaths.map((path) => readFile(path, "utf-8")),
+);
 
-const records = text
+const records = texts
+  .join("\n")
   .split(/\r?\n/)
   .map(parseLine)
   .filter((record): record is IdsRecord => record !== null)
