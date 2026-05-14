@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # Generated data
-public/data/ids.json
+public/data/kanji-parts-map.json

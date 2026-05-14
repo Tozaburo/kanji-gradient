@@ -6,8 +6,19 @@ type IdsRecord = {
   ids: string;
 };
 
+type KanjiParts = {
+  left: string;
+  right: string;
+};
+
+type KanjiPartsRecord = {
+  unicode: string;
+  char: string;
+  kanjiParts: KanjiParts;
+};
+
 const inputPath = "vendor/chise-ids/IDS-UCS-Basic.txt";
-const outputPath = "public/data/ids.json";
+const outputPath = "public/data/kanji-parts-map.json";
 
 function parseLine(line: string): IdsRecord | null {
   if (!line.trim() || line.startsWith(";")) {
@@ -35,19 +46,46 @@ function parseLine(line: string): IdsRecord | null {
   };
 }
 
+function parseIds(idsRecord: IdsRecord): KanjiPartsRecord | null {
+  const { unicode, char, ids } = idsRecord;
+
+  if (!ids.startsWith("⿰")) {
+    return null;
+  }
+
+  const parts = Array.from(ids.slice(1));
+
+  if (parts.length !== 2) {
+    return null;
+  }
+
+  const [left, right] = parts;
+
+  return {
+    unicode,
+    char,
+    kanjiParts: {
+      left,
+      right,
+    },
+  };
+}
+
 const text = await readFile(inputPath, "utf-8");
 
 const records = text
   .split(/\r?\n/)
   .map(parseLine)
-  .filter((record): record is IdsRecord => record !== null);
+  .filter((record): record is IdsRecord => record !== null)
+  .map(parseIds)
+  .filter((record): record is KanjiPartsRecord => record !== null);
 
 const map = Object.fromEntries(
   records.map((record) => [
     record.char,
     {
       unicode: record.unicode,
-      ids: record.ids,
+      kanjiParts: record.kanjiParts,
     },
   ]),
 );
