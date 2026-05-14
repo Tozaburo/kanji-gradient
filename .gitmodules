@@ -1,0 +1,3 @@
+[submodule "vendor/chise-ids"]
+	path = vendor/chise-ids
+	url = https://gitlab.chise.org/CHISE/ids.git
