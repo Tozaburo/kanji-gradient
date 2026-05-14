@@ -1,3 +1,5 @@
+import { normalizeKanjiVariants } from "./normalizeKanjiVariants";
+
 export type KanjiParts = {
   left: string;
   right: string;
@@ -26,6 +28,26 @@ export async function loadMap(): Promise<Record<string, MapEntry>> {
 }
 
 export async function separateKanji(char: string): Promise<KanjiParts | null> {
-  const ids = await loadMap();
-  return ids[char]?.kanjiParts ?? null;
+  const map = await loadMap();
+  return map[char]?.kanjiParts ?? null;
+}
+
+export async function separatedToKanji(
+  left: string,
+  right: string,
+): Promise<string | null> {
+  const map = await loadMap();
+
+  for (const char in map) {
+    const parts = map[char].kanjiParts;
+
+    if (
+      normalizeKanjiVariants(parts.left) === normalizeKanjiVariants(left) &&
+      normalizeKanjiVariants(parts.right) === normalizeKanjiVariants(right)
+    ) {
+      return char;
+    }
+  }
+
+  return null;
 }
