@@ -1,12 +1,5 @@
 import { type KanjiParts } from "./kanjiParts";
-
-function normalizeNodeName(name: string): string {
-  if (name === "⻏") {
-    return "⻖";
-  }
-
-  return name;
-}
+import { normalizeKanjiVariants } from "./normalizeKanjiVariants";
 
 export function findShortestPath(
   nodes: KanjiParts[],
@@ -16,8 +9,8 @@ export function findShortestPath(
   const graph = new Map<string, string[]>();
 
   for (const node of nodes) {
-    const left = normalizeNodeName(node.left);
-    const right = normalizeNodeName(node.right);
+    const left = normalizeKanjiVariants(node.left);
+    const right = normalizeKanjiVariants(node.right);
 
     if (!graph.has(left)) {
       graph.set(left, []);
@@ -26,8 +19,8 @@ export function findShortestPath(
     graph.get(left)!.push(right);
   }
 
-  const normalizedStart = normalizeNodeName(start);
-  const normalizedGoal = normalizeNodeName(goal);
+  const normalizedStart = normalizeKanjiVariants(start);
+  const normalizedGoal = normalizeKanjiVariants(goal);
 
   const queue: string[][] = [[normalizedStart]];
   const visited = new Set<string>([normalizedStart]);
