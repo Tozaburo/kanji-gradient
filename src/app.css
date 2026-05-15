@@ -1,7 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap");
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+
+  font-family: "Noto Sans JP", sans-serif;
 }
 
 :root {
@@ -9,4 +13,32 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  /* https://tozaburo.github.io/ui-shades-generator/?settings=0.79%2C0.1741%2C155.38%2Cgreen%2Cstring%2C1.2%2C5%2C99%2C67%2Cstring%2Csigmoid%2Cfalse%2C11%2C0.59%2C0.1231%2C235.92%2Ccolor-blue%2Cstring%2C1.2%2C5%2C99%2C67%2Cstring%2Csigmoid%2Cfalse%2C11 */
+  --color-blue-50: oklch(0.99 0.005 235.92);
+  --color-blue-100: oklch(0.97 0.0128 235.92);
+  --color-blue-200: oklch(0.92 0.0355 235.92);
+  --color-blue-300: oklch(0.86 0.0622 235.92);
+  --color-blue-400: oklch(0.77 0.0893 235.92);
+  --color-blue-500: oklch(0.67 0.1125 235.92);
+  --color-blue-600: oklch(0.55 0.1177 235.92);
+  --color-blue-700: oklch(0.41 0.0877 235.92);
+  --color-blue-800: oklch(0.26 0.055 235.92);
+  --color-blue-900: oklch(0.11 0.023 235.92);
+  --color-blue-950: oklch(0.05 0.0107 235.92);
+
+  /* https://tozaburo.github.io/ui-shades-generator/?settings=0.79%2C0.1741%2C155.38%2Cgreen%2Cstring%2C1.2%2C5%2C99%2C67%2Cstring%2Csigmoid%2Cfalse%2C11%2C0.59%2C0.015%2C235.92%2Ccolor-gray%2Cstring%2C1.2%2C5%2C99%2C67%2Cstring%2Csigmoid%2Cfalse%2C11 */
+  --color-gray-50: oklch(0.99 0.0006 235.92);
+  --color-gray-100: oklch(0.97 0.0016 235.92);
+  --color-gray-200: oklch(0.92 0.0043 235.92);
+  --color-gray-300: oklch(0.86 0.0076 235.92);
+  --color-gray-400: oklch(0.77 0.0109 235.92);
+  --color-gray-500: oklch(0.67 0.0137 235.92);
+  --color-gray-600: oklch(0.55 0.0154 235.92);
+  --color-gray-700: oklch(0.41 0.015 235.92);
+  --color-gray-800: oklch(0.26 0.0118 235.92);
+  --color-gray-900: oklch(0.11 0.0059 235.92);
+  --color-gray-950: oklch(0.05 0.0029 235.92);
 }
