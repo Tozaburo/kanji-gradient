@@ -51,3 +51,15 @@ export async function separatedToKanji(
 
   return null;
 }
+
+export async function hasLeft(left: string): Promise<boolean> {
+  const map = await loadMap();
+
+  return Object.values(map).some((entry) => entry.kanjiParts.left === left);
+}
+
+export async function hasRight(right: string): Promise<boolean> {
+  const map = await loadMap();
+
+  return Object.values(map).some((entry) => entry.kanjiParts.right === right);
+}

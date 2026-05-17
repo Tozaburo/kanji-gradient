@@ -2,7 +2,13 @@
   import { fade } from "svelte/transition";
 
   import { findShortestPath } from "./lib/findShortestPath";
-  import { loadMap, separateKanji, separatedToKanji } from "./lib/kanjiParts";
+  import {
+    loadMap,
+    separateKanji,
+    separatedToKanji,
+    hasLeft,
+    hasRight,
+  } from "./lib/kanjiParts";
 
   const segmenter = new Intl.Segmenter("ja", { granularity: "grapheme" });
   const countChar = (string: string) => {
@@ -24,14 +30,23 @@
       separateKanji(endKanji),
     ]);
 
-    return startResult !== null && endResult !== null;
+    if (startResult !== null && endResult !== null) {
+      return true;
+    }
+
+    const [startLeft, endRight] = await Promise.all([
+      hasLeft(startKanji),
+      hasRight(endKanji),
+    ]);
+
+    return startLeft !== null && endRight !== null;
   });
 
   async function onclick() {
     isInputMode = false;
 
-    const startRight = (await separateKanji(startKanji))!.right;
-    const endLeft = (await separateKanji(endKanji))!.left;
+    const startRight = (await separateKanji(startKanji))?.right || startKanji;
+    const endLeft = (await separateKanji(endKanji))?.left || endKanji;
 
     const nodes = Object.values(await loadMap()).map(
       ({ kanjiParts }) => kanjiParts,
