@@ -14,6 +14,7 @@
   const countChar = (string: string) => {
     return [...segmenter.segment(string)].length;
   };
+  const chiseNoticeUrl = `${import.meta.env.BASE_URL}data/CHISE-IDS-NOTICE.txt`;
 
   let isInputMode = $state(true);
   let startKanji = $state("始");
@@ -120,7 +121,7 @@
   </script>
 </svelte:head>
 
-<div class="screen">
+<div class="screen" class:result-active={!isInputMode}>
   {#if isInputMode}
     <main class="input-mode" transition:fade={{ duration: 140 }}>
       <input type="text" bind:value={startKanji} placeholder="漢字一字" />
@@ -193,6 +194,16 @@
       </div>
     </main>
   {/if}
+  <footer class="credits" aria-label="データ出典">
+    漢字構造データ:
+    <a
+      href="https://gitlab.chise.org/CHISE/ids"
+      target="_blank"
+      rel="noreferrer">CHISE-IDS</a
+    >
+    <span aria-hidden="true">/</span>
+    <a href={chiseNoticeUrl}>GPL-2.0-or-later</a>
+  </footer>
 </div>
 
 <style>
@@ -330,6 +341,29 @@
             color: white;
           }
         }
+      }
+    }
+
+    .credits {
+      position: fixed;
+      right: 1rem;
+      bottom: 0.75rem;
+      z-index: 2;
+
+      color: color-mix(in oklch, var(--color-blue-950) 72%, transparent);
+
+      font-size: 0.72rem;
+      line-height: 1.5;
+
+      a {
+        color: inherit;
+        text-underline-offset: 0.18em;
+      }
+    }
+
+    &.result-active {
+      .credits {
+        color: color-mix(in oklch, white 82%, transparent);
       }
     }
   }

@@ -1,0 +1,35 @@
+CHISE-IDS Notice
+================
+
+This application uses a generated subset of the CHISE-IDS package to
+create public/data/kanji-parts-map.json.
+
+Upstream:
+CHISE / CHISE IDS database
+https://gitlab.chise.org/CHISE/ids
+
+CHISE project:
+https://www.chise.org/
+
+License:
+CHISE-IDS is licensed under the GNU General Public License, version 2
+or any later version (GPL-2.0-or-later).
+
+GPL v2 text:
+../licenses/GPL-2.0.txt
+
+Upstream acknowledgment:
+Some IDS-UCS* data in CHISE-IDS are derived and expanded from the CDP
+database developed by C.C. Hsieh and his team at Academia Sinica,
+Taipei, Taiwan.
+
+Generated data:
+public/data/kanji-parts-map.json
+
+Local source files used by the generator:
+vendor/chise-ids/IDS-UCS-Basic.txt
+vendor/chise-ids/IDS-UCS-Ext-A.txt
+vendor/chise-ids/IDS-UCS-Compat.txt
+
+Generator:
+scripts/build-map.ts

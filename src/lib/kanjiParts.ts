@@ -17,7 +17,9 @@ export async function loadMap(): Promise<Record<string, MapEntry>> {
     return cache;
   }
 
-  const response = await fetch("/data/kanji-parts-map.json");
+  const response = await fetch(
+    `${import.meta.env.BASE_URL}data/kanji-parts-map.json`,
+  );
 
   if (!response.ok) {
     throw new Error("Cannot load Kanji Parts data.");
