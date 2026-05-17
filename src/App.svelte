@@ -22,32 +22,40 @@
   let result = $state<string[] | null>([]);
 
   let isValidInput = $derived.by(async () => {
-    if (countChar(startKanji) !== 1 || countChar(endKanji) !== 1) {
+    const start = startKanji;
+    const end = endKanji;
+
+    if (countChar(start) !== 1 || countChar(end) !== 1) {
       return false;
     }
 
     const [startResult, endResult] = await Promise.all([
-      separateKanji(startKanji),
-      separateKanji(endKanji),
+      separateKanji(start),
+      separateKanji(end),
     ]);
-
-    if (startResult !== null && endResult !== null) {
-      return true;
-    }
 
     const [startLeft, endRight] = await Promise.all([
-      hasLeft(startKanji),
-      hasRight(endKanji),
+      hasLeft(start),
+      hasRight(end),
     ]);
 
-    return startLeft && endRight;
+    return (
+      (startResult !== null || startLeft) && (endResult !== null || endRight)
+    );
   });
 
   async function onclick() {
+    const start = startKanji;
+    const end = endKanji;
+
     isInputMode = false;
 
-    const startRight = (await separateKanji(startKanji))?.right || startKanji;
-    const endLeft = (await separateKanji(endKanji))?.left || endKanji;
+    const [startParts, endParts] = await Promise.all([
+      separateKanji(start),
+      separateKanji(end),
+    ]);
+    const startRight = startParts?.right || start;
+    const endLeft = endParts?.left || end;
 
     const nodes = Object.values(await loadMap()).map(
       ({ kanjiParts }) => kanjiParts,
@@ -70,7 +78,7 @@
       ),
     );
 
-    result = [startKanji, ...kanjiPath, endKanji];
+    result = [start, ...kanjiPath, end];
   }
 
   function goBack() {
