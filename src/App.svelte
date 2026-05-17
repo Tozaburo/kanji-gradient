@@ -34,14 +34,17 @@
       separateKanji(end),
     ]);
 
+    const [startResultRight, endResultLeft] = await Promise.all([
+      startResult ? hasLeft(startResult?.right) : null,
+      endResult ? hasRight(endResult?.left) : null,
+    ]);
+
     const [startLeft, endRight] = await Promise.all([
       hasLeft(start),
       hasRight(end),
     ]);
 
-    return (
-      (startResult !== null || startLeft) && (endResult !== null || endRight)
-    );
+    return (startResultRight || startLeft) && (endResultLeft || endRight);
   });
 
   async function onclick() {
