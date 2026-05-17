@@ -29,7 +29,9 @@ export async function loadMap(): Promise<Record<string, MapEntry>> {
 
 export async function separateKanji(char: string): Promise<KanjiParts | null> {
   const map = await loadMap();
-  return map[char]?.kanjiParts ?? null;
+  const normalizedChar = normalizeKanjiVariants(char);
+
+  return map[char]?.kanjiParts ?? map[normalizedChar]?.kanjiParts ?? null;
 }
 
 export async function separatedToKanji(
@@ -54,12 +56,19 @@ export async function separatedToKanji(
 
 export async function hasLeft(left: string): Promise<boolean> {
   const map = await loadMap();
+  const normalizedLeft = normalizeKanjiVariants(left);
 
-  return Object.values(map).some((entry) => entry.kanjiParts.left === left);
+  return Object.values(map).some(
+    (entry) => normalizeKanjiVariants(entry.kanjiParts.left) === normalizedLeft,
+  );
 }
 
 export async function hasRight(right: string): Promise<boolean> {
   const map = await loadMap();
+  const normalizedRight = normalizeKanjiVariants(right);
 
-  return Object.values(map).some((entry) => entry.kanjiParts.right === right);
+  return Object.values(map).some(
+    (entry) =>
+      normalizeKanjiVariants(entry.kanjiParts.right) === normalizedRight,
+  );
 }
