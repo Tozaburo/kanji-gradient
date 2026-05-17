@@ -40,7 +40,7 @@
       hasRight(endKanji),
     ]);
 
-    return startLeft !== null && endRight !== null;
+    return startLeft && endRight;
   });
 
   async function onclick() {
