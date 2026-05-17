@@ -147,7 +147,7 @@
     >
       <div class="kanjis">
         {#if result !== null}
-          {#each result as kanji, index (kanji)}
+          {#each result as kanji, index (index)}
             {#if index !== 0}
               <svg
                 class="arrow"
