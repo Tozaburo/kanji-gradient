@@ -159,23 +159,29 @@
       <div class="kanjis">
         {#if result !== null}
           {#each result as kanji, index (index)}
-            {#if index !== 0}
-              <svg
-                class="arrow"
-                in:fade|global={{ duration: 150, delay: (index * 2 - 1) * 50 }}
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 640 640"
+            <span class="kanji-step">
+              {#if index !== 0}
+                <svg
+                  class="arrow"
+                  in:fade|global={{
+                    duration: 150,
+                    delay: (index * 2 - 1) * 50,
+                  }}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 640 640"
+                >
+                  <!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                  <path
+                    d="M439.1 297.4C451.6 309.9 451.6 330.2 439.1 342.7L279.1 502.7C266.6 515.2 246.3 515.2 233.8 502.7C221.3 490.2 221.3 469.9 233.8 457.4L371.2 320L233.9 182.6C221.4 170.1 221.4 149.8 233.9 137.3C246.4 124.8 266.7 124.8 279.2 137.3L439.2 297.3z"
+                  />
+                </svg>
+              {/if}
+              <span
+                class="kanji"
+                in:fade={{ duration: 150, delay: index * 2 * 50 }}>{kanji}</span
               >
-                <!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
-                <path
-                  d="M439.1 297.4C451.6 309.9 451.6 330.2 439.1 342.7L279.1 502.7C266.6 515.2 246.3 515.2 233.8 502.7C221.3 490.2 221.3 469.9 233.8 457.4L371.2 320L233.9 182.6C221.4 170.1 221.4 149.8 233.9 137.3C246.4 124.8 266.7 124.8 279.2 137.3L439.2 297.3z"
-                />
-              </svg>
-            {/if}
-            <span
-              class="kanji"
-              in:fade={{ duration: 150, delay: index * 2 * 50 }}>{kanji}</span
-            >
+            </span>
+            <wbr />
           {/each}
         {:else}
           <span class="kanji" in:fade={{ duration: 150, delay: 0 }}
@@ -308,42 +314,77 @@
       }
 
       &.result-mode {
+        box-sizing: border-box;
+        padding: 1rem;
+
         background-color: var(--color-blue-600);
 
         cursor: pointer;
 
         .kanjis {
-          display: flex;
-          align-items: center;
+          display: block;
+          text-align: center;
 
-          gap: 1.5rem;
+          --kanji-gap: 1.5rem;
 
-          svg {
-            display: block;
+          width: 100%;
+          max-width: 100%;
+          min-width: 0;
+          font-size: 0;
+          line-height: 0;
+
+          .kanji-step {
+            display: inline-block;
+            margin: 0.5rem 0.75rem;
+            vertical-align: middle;
+            white-space: nowrap;
+          }
+
+          .kanji-step > svg {
+            display: inline-block;
+            margin-right: var(--kanji-gap);
+            vertical-align: middle;
 
             fill: white;
 
-            flex: 0 0 2rem;
             width: 2rem;
             height: 2rem;
           }
 
           .fail-icon {
-            display: flex;
+            display: inline-flex;
+            margin: 0.5rem 0.75rem;
+            vertical-align: middle;
 
             height: 2rem;
+
+            svg {
+              display: block;
+
+              fill: white;
+
+              width: 2rem;
+              height: 2rem;
+            }
 
             * + * {
               margin-left: -0.5rem;
             }
           }
 
+          > .kanji {
+            margin: 0.5rem 0.75rem;
+          }
+
           .kanji {
+            display: inline-block;
+            vertical-align: middle;
+
             height: 6rem;
             line-height: 6rem;
             font-size: 6rem;
 
-            translate: 0 -0.05em;
+            transform: translateY(-0.05em);
 
             font-family: "noto-sans-cjk-jp", sans-serif;
             font-weight: 900;
