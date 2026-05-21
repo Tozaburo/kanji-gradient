@@ -11,7 +11,7 @@ const kanjiVariantGroups = [
   ["黒", "黑"],
   ["歯", "齒"],
   ["黄", "黃"],
-  ["月", "⺼", "月"]
+  ["月", "⺼"],
 ] as const;
 
 const variantToCanonical = new Map<string, string>();
