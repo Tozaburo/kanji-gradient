@@ -35,8 +35,8 @@
     ]);
 
     const [startResultRight, endResultLeft] = await Promise.all([
-      startResult ? hasLeft(startResult?.right) : null,
-      endResult ? hasRight(endResult?.left) : null,
+      startResult ? hasLeft(startResult.right) : null,
+      endResult ? hasRight(endResult.left) : null,
     ]);
 
     const [startLeft, endRight] = await Promise.all([
